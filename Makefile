@@ -40,6 +40,7 @@ docker-dash: ##creates the dash app instance
 docker-clean: ##removes all instances of the docker containers
 	@docker rm dash-app jupyter-lab
 
+
 ##@ Jupyter Lab
 launch-jup: ##launches the jupyter lab instance
 	@docker start jupyter-lab
@@ -48,6 +49,9 @@ launch-jup: ##launches the jupyter lab instance
 stop-jup: ##stops the jupyter lab instance
 	@docker stop jupyter-lab
 	@echo "The jupyter lab instance has been stopped"
+
+bash-jup: ##runs bash inside the jupyter docker container
+	@docker exec -it jupyter-lab bash
 
 ##@ Dash App
 launch-dash: ##launches the dash app
@@ -58,5 +62,5 @@ stop-dash: ##stops the dash app
 	@docker stop dash-app
 	@echo "Dash App has been stopped"
 
-test:
-	@echo $(CURDIR)
+bash-dash: ##runs bash inside the dash-app docker container
+	@docker exec -it dash-app bash
