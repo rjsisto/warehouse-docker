@@ -3,8 +3,10 @@ dash
 pandas==1.5
 joblib 
 notebook
+jupyter-console
 scikit-learn==1.2.1
 matplotlib
 papermill
 dvc
 dvc-gdrive
+toml
