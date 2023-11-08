@@ -30,11 +30,15 @@ docker-build: ##builds the docker container
 	@docker build -t warehouse-python .
 
 docker-jup: ##creates the jupyter-lab instance
-	@docker run -d --name jupyter-lab -v $(CURDIR)/notebooks:/notebooks -p 8888:8888 warehouse-python jupyter lab
+	@docker run -d --name jupyter-lab \
+	-v $(CURDIR)/notebooks:/project/notebooks -v $(CURDIR)/src:/project/src \
+	-p 8888:8888 warehouse-python jupyter lab
 	@docker stop jupyter-lab
 
 docker-dash: ##creates the dash app instance
-	@docker run -d --name dash-app -v $(CURDIR)/data_app:/data_app -v $(CURDIR)/src:/src -p 8888:8888 warehouse-python python3 /data_app/model_page.py
+	@docker run -w /project/data_app -it --name dash-app \
+	-v $(CURDIR)/data_app:/project/data_app -v $(CURDIR)/src:/project/src \
+	-p 8888:8888 warehouse-python python3 model_page.py
 	@docker stop dash-app
 
 docker-clean: ##removes all instances of the docker containers
@@ -54,6 +58,8 @@ bash-jup: ##runs bash inside the jupyter docker container
 	@docker exec -it jupyter-lab bash
 
 ##@ Dash App
+#TODO probably dont need launch and stop dash commands
+#TODO bash-dash is not working
 launch-dash: ##launches the dash app
 	@docker start dash-app
 	@echo "Go to http://localhost:8888 to access the dash app"
