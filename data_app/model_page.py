@@ -2,13 +2,13 @@ from dash import Dash, dcc, html, Input, Output
 import pandas as pd
 import plotly.graph_objects as go
 from joblib import load
+import toml
+with open("../config.toml", "r") as f:
+    config = toml.load(f)
 
-import os
-# MODEL_FOLDER = os.getenv("MODEL_FOLDER")
-# DATA_FOLDER = os.getenv("DATA_FOLDER")
+DATA_FOLDER = config["DATA_FOLDER"]
+MODEL_FOLDER = config["MODEL_FOLDER"]
 
-MODEL_FOLDER = "src/models"
-DATA_FOLDER = "src/data"
 # create a dashboard that shows these graphs by each warehouse
 
 #!! pandas import/data wrangling for presentation stuff
